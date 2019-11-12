@@ -1,0 +1,89 @@
+function [w,b] = Functional_Linear(Train, ep)
+
+% function w = Functional_Linear(Train, ep)  ep=epsilon
+%
+% Differentially private linear regression using Funcational Mechanism. 
+% 
+% Input parameters: 
+% Training data (Train) with last column attribute to be predicted.  
+% 
+% NOTICE: The values of EACH attribute (column) should be converted from [min,
+% max] to [-1,1] in order to match the privacy design of Functional
+% Mechanism. Please make sure that ALL values in Train are located in
+% [-1,1]. If Train is rescaled to meet this requirement, Test should be
+% converted IN THE SAME WAY to get the correct answer.
+%
+% Privacy budget (ep) is a parameter in differential privacy, which
+% indicates the strength of privacy protection.
+%
+% Model is 
+%
+%   w = argmin sum((x*w+b-y)^2)
+%
+% Outputs are regression coefficients w and b.
+%
+% Copyright 2012 Jun Zhang
+
+
+rangeChecker = sum(sum(Train>1)) + sum(sum(Train<-1));
+if (rangeChecker>0)
+    disp('NOTICE: The values of EACH attribute (column) should be converted from [min, max] to [-1,1]');
+    return;
+end
+
+
+
+global Coe2;
+global Coe1;
+
+
+
+%           Settings
+options = optimset('LargeScale','off');  %优化函数
+options.MaxFunEvals = 100000;  %算法迭代的次数
+
+disp('Functional Mechanism is launching...');
+
+[TrainRow, TrainCol] = size(Train); %训练集的行，列数
+
+TrainX = Train(:,1:end-1);
+TrainX = [TrainX, ones(TrainRow,1)];           % wx+b  
+
+TrainY = Train(:,end);
+
+d = TrainCol;  %d=2
+
+R0 = TrainX' * TrainX;  %'表示转置
+R1 = (-2) .* (TrainX' * TrainY);  %  .*表示矩阵乘积
+
+Sensitivity = 2*d*d+4*d; % why is equal 2(d+1)^2  ?
+
+
+Coe2 = R0 + laprnd(d, d, 0, sqrt(2)*Sensitivity*(1/ep));  %laplace 噪声
+Coe2 = 0.5 * (Coe2'+Coe2);
+Coe2 = Coe2 + 5 * sqrt(2)* Sensitivity*(1/ep) * eye(d);         %Regularization
+Coe1 = R1 + laprnd(d, 1, 0, sqrt(2)*Sensitivity*(1/ep)); %到这里了
+
+% Consistency: Coe2 positive-define
+[vec,val]=eig(Coe2);  
+
+del = diag(val)<1e-8;
+
+val(del,:) = [];
+val(:,del) = [];
+
+vec(:,del) = [];
+
+
+Coe2 = val;
+Coe1 = vec'*Coe1;
+%   End of Consistency
+
+g0 = rand(1,d-sum(del));
+[g,~,~,~] = fminunc(@linearnoised,g0,options);
+
+bestw = g*vec';
+
+w = bestw(1:end-1);
+b = bestw(end);
+

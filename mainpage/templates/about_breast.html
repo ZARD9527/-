@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script src="{% static 'js/echarts.min.js' %}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>数据集介绍 - 乳腺癌数据集</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<!--
+Template 2054 Bubble Show
+http://www.tooplate.com/view/2054-bubble-show
+-->
+<link href="{% static 'css/tooplate_style.css' %}" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="{% static 'js/swfobject.js' %}"></script>
+<script type="text/javascript">
+	var flashvars = {};
+	flashvars.xml_file = "photo_list.xml";
+	var params = {};
+	params.wmode = "transparent";
+	var attributes = {};
+	attributes.id = "slider";
+	swfobject.embedSWF("flash_slider.swf", "flash_grid_slider", "960", "360", "9.0.0", false, flashvars, params, attributes);
+</script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/ddsmoothmenu.css' %}" />
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js'  %}"></script>
+<script type="text/javascript" src="{% static 'js/ddsmoothmenu.js' %}">
+
+/***********************************************
+* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+</script>
+
+<script type="text/javascript">
+
+ddsmoothmenu.init({
+	mainmenuid: "tooplate_menu", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+
+</script>
+
+</head>
+<body id="sub_page">
+
+<div id="tooplate_wrapper_sp">
+	<div id="tooplate_header_sp">
+    	<div id="tooplate_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="index.html">主页</a></li>
+                <li><a href="about.html" class="selected">数据集</a>
+                    <ul>
+                        <li><a href="about_nursery.html">幼儿园数据集</a></li>
+                        <li><a href="about_titanic.html">Titanic数据集</a></li>
+                        <li><a href="about_breast.html">乳腺癌数据集</a></li>
+                        <li><a href="about_credit.html">个人信用数据集</a></li>
+                  </ul>
+              </li>
+                <li><a href="portfolio.html">预测</a>
+                    <ul>
+                        <li><a href="#">Sub menu 1</a></li>
+                        <li><a href="#">Sub menu 2</a></li>
+                        <li><a href="#">Sub menu 3</a></li>
+                        <li><a href="#">Sub menu 4</a></li>
+                        <li><a href="#">Sub menu 5</a></li>
+                  </ul>
+              </li>
+                <li><a href="#">说明文档</a>
+                   <ul>
+                        <li><a href="docs.html">幼儿园案例文档</a></li>
+                        <li><a href="#">Titanic案例文档</a></li>
+                        <li><a href="#">乳腺癌案例文档</a></li>
+                        <li><a href="#">信用评估案例文档</a></li>
+                  </ul>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <br style="clear: left" />
+        </div> <!-- end of tooplate_menu -->
+        <div id="site_title"><h1><a href="#">Bubble Show</a></h1></div>
+    </div>
+    
+    <div id="tooplate_main">
+		<div id="tooplate_content">
+			<div class="col_fw">
+                <h1>乳腺癌细胞数据集</h1>
+                <img src="{% static 'images/tooplate_image_01.png' %}" alt="image" class="image_frame image_fl" />
+                <p><em>乳腺癌数据包括569例细胞活检案例，32个特征属性。第一个特征是细胞的ID，第二个特征是细胞诊断结果，
+                    其他30个特征是数值型的细胞特点的记录。癌症诊断结果用字母“M”表示恶性，用字母“B”表示良性。</em></p>
+                <p>添加文字</p>
+                <a class="more" href="#"></a>
+            </div>
+             <div class="col_fw_last">
+                <div class="col_w300 float_l">
+   <div class="cleaner h10"></div>
+     <a class="download" href="/static/data/breast-cancer-wisconsin.csv"></a>
+      <p>------------------------------------------------------------</p>
+                	<h2>数据分布</h2>
+   <div id="main" style="width: 600px;height:400px;"></div>
+   <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                textStyle:{
+                        color:'#fff'
+                    },
+                text: '细胞类型分布'
+            },
+            tooltip: {},
+            legend: {
+                data:['XXX']
+            },
+            xAxis: {
+                axisLabel:{
+                    show:true,
+                    textStyle:{
+                        color:'#fff',
+                    }
+                },
+             axisLine:{
+               lineStyle:{
+                   color:'#fff',
+               }
+             },
+                data: ["恶性细胞","良性细胞"]
+            },
+            yAxis: {
+                axisLabel:{
+                    show:true,
+                    textStyle:{
+                        color:'#fff'
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                }
+            },
+            series: [{
+                name: '细胞数量',
+                type: "bar",
+                barWidth: 50,
+                itemStyle:{
+                    normal:{
+                        color: function (params) {
+                            var colorList = ['#C1232B','#B5C334'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                data: [357,212]
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    </div>
+                
+                <div class="col_w300 float_r">
+                	<h2>Testimonial</h2>
+                    <blockquote>
+                    <p>Fusce nec felis id lacus sollicitudin vulputate. Proin tincidunt, arcu id pellentesque accumsan, eget sollicitudin risu neque dolor imperdiet ligula, quis viverra tellus nulla a odio. Curabitur vitae enim risus, at placerat turpis. Mauris feugiat suscipit tempus fringilla, felis in velit.</p>
+                    <cite><a href="#">Steve</a> - <span>Web Designer</span></cite>
+                    </blockquote>
+                    <div class="cleaner h10"></div>                    
+					<a class="more" href="#"></a>
+                </div>
+                
+                <div class="cleaner"></div>
+			</div>	
+        </div> <!-- end of content -->
+        
+        <div id="tooplate_sidebar">
+        	<h3>实现文档</h3>
+                <div class="news_box">
+                    <a href="#">决策树模型</a>
+                    <p>Pellentesque in nunc quam. Sed molestie ultricies ante, vel scelerisque diam varius sed. </p>
+                </div>
+                <div class="news_box">
+                    <a href="#">随机森林模型</a>
+                    <p>Auris nisl mi, aliquet ac lobortis ut, tincidunt in tortor nisl vitae lectus dapibus pellentesque.</p>
+                </div>
+                <div class="news_box">
+                    <a href="#">AdaBoostClassifier模型 </a>
+                    <p>Nunc viverra vestibulum magna, nec dignissim turpis rhoncus tincidunt. Donec ac nibh arcu. </p>
+                </div>
+                 <div class="news_box">
+                    <a href="#">ExtraTreesClassifier模型</a>
+                    <p>Integer ac ultricies nisi. Curabitur velit ante, porttitor ac feugiat a, porta ut lectus.</p>
+                </div>
+        </div> <!-- end of sidebar -->
+
+        <div class="cleaner"></div>
+    </div> <!-- end of main -->
+
+</div>
+
+</body>
+</html>

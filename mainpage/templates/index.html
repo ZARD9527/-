@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>机器学习之决策树学习系统</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<!--
+Template 2054 Bubble Show
+http://www.tooplate.com/view/2054-bubble-show
+-->
+<link href="{%static 'css/tooplate_style.css' %} " rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="{% static 'js/swfobject.js' %}"></script>
+<script type="text/javascript">
+	var flashvars = {};
+	flashvars.xml_file = "photo_list.xml";
+	var params = {};
+	params.wmode = "transparent";
+	var attributes = {};
+	attributes.id = "slider";
+	swfobject.embedSWF("flash_slider.swf", "flash_grid_slider", "960", "360", "9.0.0", false, flashvars, params, attributes);
+</script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/ddsmoothmenu.css' %}" />
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ddsmoothmenu.js' %}">
+
+/***********************************************
+* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+</script>
+
+<script type="text/javascript">
+
+ddsmoothmenu.init({
+	mainmenuid: "tooplate_menu", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+
+</script>
+
+</head>
+<body id="home_page">
+
+<div id="tooplate_wrapper">
+	<div id="tooplate_header_fp">
+    	<div id="tooplate_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="index.html" class="selected"><span></span>主页</a></li>
+                <li><a href="#"><span></span>数据集</a>
+                    <ul>
+                        <li><a href="about_nursery.html">幼儿园数据集</a></li>
+                        <li><a href="about_titanic.html">Titanic数据集</a></li>
+                        <li><a href="about_breast.html">乳腺癌数据集</a></li>
+                        <li><a href="about_credit.html">个人信用数据集</a></li>
+                  </ul>
+              </li>
+                <li><a href="portfolio.html"><span></span>预测</a>
+              </li>
+                <li><a href="#"><span></span>说明文档</a>
+                    <ul>
+                        <li><a href="docs.html">幼儿园案例文档</a></li>
+                        <li><a href="#">Titanic案例文档</a></li>
+                        <li><a href="#">乳腺癌案例文档</a></li>
+                        <li><a href="#">信用评估案例文档</a></li>
+                  </ul>
+                </li>
+                <li><a href="contact.html"><span></span>Contact</a></li>
+            </ul>
+            <br style="clear: left" />
+        </div> <!-- end of tooplate_menu -->
+        <div id="site_title"><h1><a href="#">机器学习--决策树案例介绍</a></h1></div>
+
+    </div>
+    
+<div id="tooplate_main">
+    	<div class="col_fw">
+          <div class="col_allw300">
+           	<h2>用决策树预测入学申请的优先级别</h2>
+            <img src="{%static 'images/tooplate_image_01.png'%}" alt="image" class="image_frame" />
+            <p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit cras mollis molestie libero.</em></p>
+            <p>幼儿园<a href="about_nursery.html" >数据集</a>来源于一个层次化的决策模型，最初用于幼儿园的排序。在1980的几年里，在卢布尔雅那的斯洛文尼亚，这些学校的入学率过高，被拒绝的申请经常需要客观的解释。最后的决定取决于三个子问题：父母和子女的托儿所、家庭结构和财务状况以及家庭的社会和健康状况。本案例将介绍怎么预测孩子入学申请的优先级别，有not_recom、recommend、very_recom、priority 、spec_prior 5个类别，属于多分类问题。</p>
+				<div class="cleaner h20"></div>
+             <a class="more" href="#"></a>
+            </div>
+            <div class="col_allw300">
+            	<h2>用决策树预测乘客是否幸存</h2>
+				<img src="{% static 'images/tooplate_image_02.png' %}" alt="image" class="image_frame" />
+              <p><em>Fusce nulla tellus, malesuada id accumsan a, hendrerit vitae nulla.</em></p>
+
+              <p><a href="about_titanic.html">Titanic数据集</a>是泰坦尼克号上的乘客的信息，预测乘客是否幸存。这是个二元分类的机器学习问题，但是由于数据样本相对较少，在当时慌乱的情况下幸存者有一定的随机性，还是有一定挑战的。<br></br><br></br><br></br></p>
+
+              </p>
+
+              <div class="cleaner h20"></div>
+               <a class="more" href="#"></a>
+         </div>
+          <div class="col_allw300">
+            <h2>决策树之乳腺癌诊断</h2>
+            <img src="{% static 'images/tooplate_image_01.png' %}" alt="image" class="image_frame" />
+            <p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit cras mollis molestie libero.</em></p>
+            <p>定期的乳腺癌检查使得疾病在引起明显的症状之前就得到诊断与治疗。早期的检测过程包括检查乳腺组织的异常肿块。如果发现一个肿块，那么就需要进行细针抽吸活检，即利用一根空心针从肿块中提取细胞的一个小样品，然后临床医生在显微镜下检查细胞，从而确定肿块可能是恶性的还是良性的。本案例将介绍如何根据实验测量的细胞的<a href="about_breast.html">数据</a>来预测该细胞是良性细胞还是恶性细胞，属于二分类问题。</p>
+        <div class="cleaner h20"></div>
+             <a class="more" href="#"></a>
+            </div>
+            <div class="col_allw300">
+              <h2>用决策树对个人信用风险评估</h2>
+        <img src="{% static 'images/tooplate_image_02.png' %}" alt="image" class="image_frame" />
+              <p><em>Fusce nulla tellus, malesuada id accumsan a, hendrerit vitae nulla.</em></p>
+
+              <p>在生活中个人信用不管对于个人还是银行都很重要。当我们需要向银行申请贷款，
+                  银行需要根据用户的个人信息以及历史信用记录来审核该用户是否合格。在贷款申请被银行拒绝时，
+                  申请者需要知道为什么自己的信用级别不符合银行的要求。银行也可以给出合适的理由。
+                  本案例将介绍如何根据银行记录的用户个人信贷信息<a href="about_credit.html">数据</a>
+                  来预测该用户的信用好坏情况，属于二分类问题。<br><br/></p>
+              </p>
+              <div class="cleaner h20"></div>
+               <a class="more" href="#"></a>
+          </div>
+
+</body>
+</html>

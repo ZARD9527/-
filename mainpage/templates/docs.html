@@ -1,0 +1,369 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="{% static 'js/echarts.min.js' %}"></script>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>案例说明文档</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/prettify.css' %}">
+</head>
+<body>
+<header>
+  <div class="container">
+    <h2 class="docs-header">幼儿园案例说明文档</h2>
+  </div>
+</header>
+<section>
+  <div class="container">
+
+    <ul class="docs-nav" id="menu-left">
+      <li><strong>Getting Started</strong></li>
+      <li><a href="#welcome" class=" ">1.1采集数据</a></li>
+      <li><a href="#benefits" class=" ">1.2用pandas库加载数据集</a></li>
+      <li><a href="#features" class=" ">1.3提取特征</a></li>
+      <li><a href="#license" class=" ">1.4训练模型--决策树</a></li>
+      <li><a href="#othermodel" class=" ">1.5其它模型对比</a></li>
+
+      <li class="separator"></li>
+      <li><strong>预测</strong></li>
+      <li><a href="#view_type" class=" ">View Type</a></li>
+      <li><a href="#animation_style" class=" ">Animation Styles</a></li>
+      <li><a href="#bars_text" class=" ">Bars Text</a></li>
+      <li><a href="#vote_counter" class=" ">Vote Counter</a></li>
+      <li><a href="#rating_icons" class=" ">Rating Icons</a></li>
+      <li><a href="#rating_titles" class=" ">Rating Titles</a></li>
+      <li><a href="#bar_colors" class=" ">Bar Colors</a></li>
+    </ul>
+
+    <div class="docs-content">
+      <h2> Getting Started</h2>
+      <h3 id="welcome"> 1.1采集数据</h3>
+      <p> Are you listening to your customers?</p>
+      
+      <p style="text-indent: 2em"> 可以从http://archive.ics.uci.edu/ml/machine-learning-databases/nursery/网站下载Nursery的数据集。
+          数据集包含parents、children、form、finance、social等8个属性，12960条数据。
+          将数据集保存为csv文件的格式，我们使用pandas库加载这些数据。</p>
+
+      <h3 id="benefits"> 1.2用pandas库加载数据集</h3>
+      <ul>
+        <li>用read_csv函数就能加载数据集：</li>
+          <p>import pandas as pd</p>
+          <p>data=pd.read_csv(filepath)</p>
+        <li>上述代码会加载数据集，输入以下代码，可以输出数据集的前5行，前5列的数据。</li>
+          <p>print(data.iloc[:5,:5])</p>
+        <li>输出结果如下：</li>
+      </ul>
+        <pre class="prettyprint">
+      	       parents has_nurs    form   children  housing
+            0   usual   proper  complete      1    convenient
+            1   usual   proper  complete      1    convenient
+            2   usual   proper  complete      1    convenient
+            3   usual   proper  complete      1    convenient
+            4   usual   proper  complete      1    convenient
+</pre>
+        <p style="text-indent: 2em">输入代码：print(data.isnull().any())可以判断每列中是否有缺失值。如果存在缺失值，
+            应该对缺失值做相应的处理，比如按照众数、均值填补。因为Nursery数据集没有缺失值，
+            所以不需要处理。</p>
+      <h3 id="features"> 1.3提取特征</h3>
+        <p style="text-indent: 2em"> 通过观察数据发现，数据的类型不是连续取值而是分类数据，
+            这些数据不能直接用于构造决策树。因此，需要对分类特征进行编码，
+            比如：国籍可以是[“China”,”America”,”Australia”]，
+            这样的特征可以分别表示成[1,2,3]</p>
+        <p style="text-indent: 2em">输入以下代码，将其中一列分类数据转换成数值型数据。
+            其他特征也按照这种方式处理，处理后的数据就可以用于训练模型了。</p>
+        <pre class="prettyprint">
+            from sklearn import  preprocessing
+            lbl=preprocessing.LabelEncoder()
+            lbl.fit(list(data['label'].values))
+            data['label'] = lbl.transform(list(data['label'].values))</pre>
+
+      <h3 id="license"> 1.4训练模型----决策树</h3>
+      <p> 决策树是一种有监督的机器学习算法。算法分为两大步骤：
+      <br>&nbsp;&nbsp;首先是训练阶段，用训练数据集构造一棵树，完成模型的创建。
+      <br>&nbsp;&nbsp;其次是预测阶段，用训练好的决策树预测测试数据的类别。</p>
+
+      <p style="text-indent: 2em">创建决策树的算法有多种，通过迭代生成一棵树。它们从根节点开始，选取最佳特征，
+           用于第一个决策，到达下一个节点，选择下一个最佳特征，以此类推。
+          从scikit-learn库中导入 DecisionTreeClassifier 类，用它创建决策树。</p>
+        <p>from sklearn.tree import DecisionTreeClassifier
+        <br>clf = DecisionTreeClassifier()</p>
+        <li>这里设置决策树的模型的参数都为默认。接着提取处理过得数据，
+            以便用在分类器中。用以下代码将数据集按0.75：0.25的比例划分为训练集和测试集。</li>
+        <li>然后用下面代码将训练集构建决策树，对测试集进行预测，最后输出预测的准确率。</li>
+
+        <pre class="prettyprint">
+            clf = clf.fit(X_train, y_train)
+            y_pred =clf.predict(X_test)
+            print("Accuracy:",np.mean(y_test==y_pred))</pre>
+        <p>最后模型的准确率为：0.9981</p>
+        <li>完整代码：</li>
+        <pre class="prettyprint">
+
+from sklearn import tree
+from sklearn.model_selection import train_test_split
+import numpy as np
+import pandas as pd
+from sklearn import preprocessing
+filepath="nursery.csv"
+data=pd.read_csv(filepath,header=None)
+print(data.isnull().any())
+data.columns=["parents","has_nurs","form","children","housing","finance","social","health","label"]
+print(data.iloc[:5,:5])
+lbl=preprocessing.LabelEncoder()
+lbl.fit(list(data['label'].values))
+data['label'] = lbl.transform(list(data['label'].values))
+lbl.fit(list(data['parents'].values))
+data['parents'] = lbl.transform(list(data['parents'].values))
+lbl.fit(list(data['has_nurs'].values))
+data['has_nurs'] = lbl.transform(list(data['has_nurs'].values))
+lbl.fit(list(data['form'].values))
+data['form'] = lbl.transform(list(data['form'].values))
+lbl.fit(list(data['children'].values))
+data['children'] = lbl.transform(list(data['children'].values))
+lbl.fit(list(data['housing'].values))
+data['housing'] = lbl.transform(list(data['housing'].values))
+lbl.fit(list(data['finance'].values))
+data['finance'] = lbl.transform(list(data['finance'].values))
+lbl.fit(list(data['social'].values))
+data['social'] = lbl.transform(list(data['social'].values))
+lbl.fit(list(data['health'].values))
+data['health'] = lbl.transform(list(data['health'].values))
+clf=tree.DecisionTreeClassifier()
+y_label=data["label"].values
+x_prediction=data[["parents","has_nurs","form","children","housing","finance","social","health"]]
+X_train, X_test, y_train, y_test= train_test_split(x_prediction, y_label,random_state=0)
+clf = clf.fit(X_train, y_train)
+y_pred =clf.predict(X_test)
+print("Accuracy:",np.mean(y_test==y_pred))
+        </pre>
+     <h3 id="othermodel"> 1.5其它模型对比</h3>
+        <p style="text-indent: 2em">除了用决策树模型得到分类的结果，我们还可以用
+            到ExtraTreesClassifier、AdaBoostClassifier、RandomForestClassifier等分类模型。
+            实现的方法可以参考决策树模型，以及查看scikit-learn的文档。
+            在这个案例中，通过使用其他模型得到的实验结果如下：</p>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '模型准确率对比'
+            },
+            tooltip: {},
+            legend: {
+                data:['模型准确率对比']
+            },
+            xAxis: {
+                data: ["决策树模型","随机森林模型","AdaBoost","ExtraTrees"]
+            },
+            yAxis: {},
+            series: [{
+                name: '分类准确率',
+                type: 'bar',
+                itemStyle:{
+                    normal:{
+                        color: function (params) {
+                            var colorList = ['#FE8463','#9BCA63','#FAD860','#F3A43B'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                data: [0.9981, 0.9679, 0.7676, 0.9667]
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+      <hr>
+      <h2> 数据预测</h2>
+      <p> Before you make any cusomization or even start using Opineo create a 'div' element
+        and assign it some id. Now add references to necessary Javascrip files e.g.</p>
+      <ul>
+        <li>A reference to latest jQuery library </li>
+        <li>A reference to Opineo script file sudo nano opineo.js</li>
+      </ul>
+      <p> The following customization options are available in Opineo:</p>
+      <h3 id="view_type"> View Type</h3>
+      <ul>
+        <li>Detailed View</li>
+      </ul>
+     
+      <pre class="prettyprint">&lt;script&gt;
+      	$(document).ready(function (){
+        $('#DefaultOptions').opineo('results.php', {curvalue:3,
+            view: 'detailed',
+            animation_speed: 'super',
+            show_total_votes_counter: false,
+            show_overall_rating: true});
+         })
+&lt;/script&gt;</pre>
+      <ul>
+        <li>Compact View</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+	$(document).ready(function (){
+	$('#CompactView').opineo('results.php',
+    	    {curvalue:3, view: 'compact',
+    	    animation_speed: 'super'});
+	})
+&lt;/script&gt;</pre>
+      <ul>
+        <li>Mini View</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#MiniView').opineo('results.php', {curvalue:0, view: 'mini', callback: myCallback});
+    })	
+&lt;/script&gt;</pre>
+      <h3 id="animation_style"> Animation Style</h3>
+      <ul>
+        <li>Slow</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      <ul>
+        <li>Medium</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'mild'});
+    })	
+&lt;/script&gt; </pre>
+      <ul>
+        <li>Fast</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'fast'});
+    })	
+ &lt;/script&gt;</pre>
+      <ul>
+        <li>Super Fast</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'super'});
+    })	
+&lt;/script&gt;</pre>
+      <ul>
+        <li>Ultra Fast</li>
+      </ul>
+      <pre class="prettyprint"> &lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'ultra fast'});
+    })	
+&lt;/script&gt; </pre>
+      <h3 id="bars_text"> Bars Text</h3>
+      <ul>
+        <li>Show</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:true});
+    })	
+&lt;/script&gt;</pre>
+      <ul>
+        <li>Hide</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
+    })	
+ &lt;/script&gt;</pre>
+      <h3 id="vote_counter"> Vote Counter</h3>
+      <ul>
+        <li>Show</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', show_votes_counter:true});
+    })	
+&lt;/script&gt; </pre>
+      <ul>
+        <li>Hide</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
+    })	
+&lt;/script&gt;</pre>
+      <h3 id="rating_icons"> Rating Icons</h3>
+      <ul>
+        <li>Colored</li>
+        <li>Grey</li>
+      </ul>
+      <h3 id="rating_titles"> Rating Titles</h3>
+      <ul>
+        <li>Text For First Star</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_1_text:'Hate It'});
+    })	
+&lt;/script&gt;</pre>
+      <ul>
+        <li>Text For Second Star</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_2_text:'Don't Like It'});
+    })	
+&lt;/script&gt; </pre>
+      <ul>
+        <li>Text For Third Star</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_1_text:'Its OK'});
+    })	
+&lt;/script&gt;</pre>
+      <ul>
+        <li>Text For Fourth Star</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_1_text:'Like It'});
+    })	
+&lt;/script&gt;</pre>
+      <ul>
+        <li>Text For Fifth Star</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_1_text:'Love It'});
+    })	
+&lt;/script&gt;</pre>
+      <h3 id="bar_colors"> Bar Colors</h3>
+      <ul>
+        <li>Colors of Red Bar</li>
+        <li>Colors of Yellow Bar</li>
+        <li>Colors of Green Bar</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="vibrant centered">
+  <div class="container">
+    <h4>介绍结束</h4>
+  </div>
+</section>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/prettify/prettify.js' %}"></script>
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css&skin=sunburst"></script>
+<script src="{% static 'js/layout.js' %}"></script>
+ <script src="{% static 'js/jquery.localscroll-1.2.7.js' %}" type="text/javascript"></script>
+ <script src="{% static 'js/jquery.scrollTo-1.4.3.1.js' %}" type="text/javascript"></script>
+</body>
+</html>

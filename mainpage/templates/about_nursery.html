@@ -1,0 +1,162 @@
+{%load static%}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>数据集介绍 - 幼儿园数据集</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<!--
+Template 2054 Bubble Show
+http://www.tooplate.com/view/2054-bubble-show
+-->
+<link href="{% static 'css/tooplate_style.css' %}" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="{% static 'js/swfobject.js' %}"></script>
+<script type="text/javascript">
+	var flashvars = {};
+	flashvars.xml_file = "photo_list.xml";
+	var params = {};
+	params.wmode = "transparent";
+	var attributes = {};
+	attributes.id = "slider";
+	swfobject.embedSWF("flash_slider.swf", "flash_grid_slider", "960", "360", "9.0.0", false, flashvars, params, attributes);
+</script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/ddsmoothmenu.css' %}" />
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ddsmoothmenu.js' %}">
+
+/***********************************************
+* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+</script>
+
+<script type="text/javascript">
+
+ddsmoothmenu.init({
+	mainmenuid: "tooplate_menu", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+
+</script>
+
+</head>
+<body id="sub_page">
+
+<div id="tooplate_wrapper_sp">
+	<div id="tooplate_header_sp">
+    	<div id="tooplate_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="index.html">主页</a></li>
+                <li><a href="#" class="selected">数据集</a>
+                    <ul>
+                        <li><a href="about_nursery.html">幼儿园数据集</a></li>
+                        <li><a href="about_titanic.html">Titanic数据集</a></li>
+                        <li><a href="about_breast.html">乳腺癌数据集</a></li>
+                        <li><a href="about_credit.html">个人信用数据集</a></li>
+                  </ul>
+              </li>
+                <li><a href="portfolio.html">预测</a>
+                    <ul>
+                        <li><a href="#">Sub menu 1</a></li>
+                        <li><a href="#">Sub menu 2</a></li>
+                        <li><a href="#">Sub menu 3</a></li>
+                        <li><a href="#">Sub menu 4</a></li>
+                        <li><a href="#">Sub menu 5</a></li>
+                  </ul>
+              </li>
+                <li><a href="blog.html">说明文档</a>
+                   <ul>
+                        <li><a href="docs.html">幼儿园案例文档</a></li>
+                        <li><a href="#">Titanic案例文档</a></li>
+                        <li><a href="#">乳腺癌案例文档</a></li>
+                        <li><a href="#">信用评估案例文档</a></li>
+                  </ul>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <br style="clear: left" />
+        </div> <!-- end of tooplate_menu -->
+        <div id="site_title"><h1><a href="#">Bubble Show</a></h1></div>
+    </div>
+    
+    <div id="tooplate_main">
+		<div id="tooplate_content">
+			<div class="col_fw">
+                <h1>幼儿园数据集</h1>
+                <img src="{% static 'images/tooplate_image_01.png' %}" alt="image" class="image_frame image_fl" />
+                <p><em>数据集包含parents、children、form、finance、social等8个属性，12960条数据。</em></p>
+                <p>添加文字</p>
+                <a class="more" href="#"></a>
+            </div>
+             <div class="col_fw_last">                 
+				
+                <div class="col_w300 float_l">
+                	<h2>数据属性介绍</h2>
+                    
+                    <ul class="tooplate_list">
+                    	<li>parents: Parents' occupation</li>
+                        <li>has_nurs: Child's nursery</li>
+                        <li>form: Form of the family</li>
+                        <li>children: Number of children</li>
+                        <li>housing: Housing conditions</li>
+                        <li>finance: Financial standing of the family</li>
+                        <li>social: Social conditions</li>
+                        <li>health: Health conditions</li>
+                    </ul>
+                    <div class="cleaner h10"></div>
+                    <a class="download" href='/static/data/nursery.csv' ></a>
+                </div>
+                
+                <div class="col_w300 float_r">
+
+                </div>
+                
+                <div class="cleaner"></div>
+			</div>	
+        </div> <!-- end of content -->
+        
+        <div id="tooplate_sidebar">
+        	<h3>用数据集训练模型</h3>
+                <div class="news_box">
+                    <a href="docs.html">用决策树模型实现的文档</a>
+                    <p>Pellentesque in nunc quam. Sed molestie ultricies ante, vel scelerisque diam varius sed. </p>
+                </div>
+                <div class="news_box">
+                    <form action="/index/about_nursery.html" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <p>>>>在线预测<br><br>从本地选择数据</p>
+                    <input id="f" type="file" name="f" class="upfile"/>
+                     <br>提示：文件只能是csv格式
+                    <p><br>>>>选择使用的预测模型</p>
+                     <input type="checkbox" name="checkbox_1" value="DecsionTree">决策树模型<br>
+                     <input type="checkbox" name="checkbox_1" value="RandomForest">随机森林模型<br>
+                     <input type="checkbox" name="checkbox_1" value="AdaBoost">AdaBoost模型<br>
+                     <input type="checkbox" name="checkbox_1" value="ExtraTrees">ExtraTrees模型<br>
+                        <p><br>模型参数设置</p>
+
+                       树的深度： <input type="text" name="textbox" value=""/>
+                     <input type="submit" class="button" value="开始预测" />
+                    </form>
+                   {{ check_list___ }}
+                     <p></p>
+                      <a href={{ check_list___ }}>预测结果文件下载</a>
+                </div>
+
+        </div> <!-- end of sidebar -->
+
+        <div class="cleaner"></div>
+    </div> <!-- end of main -->
+
+</div>
+
+</body>
+</html>
